@@ -12,9 +12,16 @@ and rendered live on an editable grid.
 
 React · Vite · Tailwind CSS · Framer Motion · Recharts · Django REST Framework · JWT · Microsoft SQL Server
 
+**[▶ Try the live demo](https://codescribe01.github.io/pathfinding-algorithm-visualizer/)**
+
 </div>
 
 ---
+
+> **Live demo:** [codescribe01.github.io/pathfinding-algorithm-visualizer](https://codescribe01.github.io/pathfinding-algorithm-visualizer/)
+> runs the front end on GitHub Pages — all six algorithms, the maze generators and the comparison
+> workspace execute in your browser. Accounts, run history and analytics need the Django API, so
+> they are disabled there; run the stack locally for the full application.
 
 > **Presenting this project?** [docs/PROJECT_GUIDE.md](docs/PROJECT_GUIDE.md) has the setup steps,
 > architecture, design rationale, a rehearsed demo script and the questions an examiner is likely
