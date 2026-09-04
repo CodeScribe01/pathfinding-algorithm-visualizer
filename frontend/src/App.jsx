@@ -10,6 +10,8 @@ import AlgorithmsPage from '@/pages/Algorithms'
 import LoginPage from '@/pages/Login'
 import RegisterPage from '@/pages/Register'
 import NotFoundPage from '@/pages/NotFound'
+import ApiUnavailablePage from '@/pages/ApiUnavailable'
+import { DEMO_MODE } from '@/lib/constants'
 
 // Chart-heavy routes are split out so the visualiser bundle stays lean.
 const ComparePage = lazy(() => import('@/pages/Compare'))
@@ -34,6 +36,15 @@ function RouteFallback() {
   )
 }
 
+/**
+ * Routes that require the Django API. In the static demo build they render an
+ * explainer instead of a login redirect that could never succeed.
+ */
+function ApiRoute({ children }) {
+  if (DEMO_MODE) return <ApiUnavailablePage />
+  return <ProtectedRoute>{children}</ProtectedRoute>
+}
+
 export default function App() {
   return (
     <>
@@ -46,30 +57,36 @@ export default function App() {
             <Route path="/algorithms" element={<AlgorithmsPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/technical" element={<TechnicalPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/login"
+              element={DEMO_MODE ? <ApiUnavailablePage /> : <LoginPage />}
+            />
+            <Route
+              path="/register"
+              element={DEMO_MODE ? <ApiUnavailablePage /> : <RegisterPage />}
+            />
             <Route
               path="/history"
               element={
-                <ProtectedRoute>
+                <ApiRoute>
                   <HistoryPage />
-                </ProtectedRoute>
+                </ApiRoute>
               }
             />
             <Route
               path="/analytics"
               element={
-                <ProtectedRoute>
+                <ApiRoute>
                   <AnalyticsPage />
-                </ProtectedRoute>
+                </ApiRoute>
               }
             />
             <Route
               path="/grids"
               element={
-                <ProtectedRoute>
+                <ApiRoute>
                   <SavedGridsPage />
-                </ProtectedRoute>
+                </ApiRoute>
               }
             />
             <Route path="*" element={<NotFoundPage />} />

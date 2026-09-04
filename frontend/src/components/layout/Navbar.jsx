@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Github, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/cn'
-import { GITHUB_URL } from '@/lib/constants'
+import { DEMO_MODE, GITHUB_URL } from '@/lib/constants'
 import { Tooltip } from '@/components/ui'
 import { Wordmark } from './Logo'
 import { UserMenu } from './UserMenu'
@@ -11,9 +11,10 @@ const NAV_LINKS = [
   { to: '/visualizer', label: 'Visualizer' },
   { to: '/algorithms', label: 'Algorithms' },
   { to: '/compare', label: 'Compare' },
-  { to: '/history', label: 'History' },
-  { to: '/analytics', label: 'Analytics' },
-]
+  // Account-backed routes: omitted from the static demo build, which has no API.
+  { to: '/history', label: 'History', needsApi: true },
+  { to: '/analytics', label: 'Analytics', needsApi: true },
+].filter((link) => !(DEMO_MODE && link.needsApi))
 
 const linkClass = ({ isActive }) =>
   cn(
@@ -53,9 +54,11 @@ export function Navbar() {
             </a>
           </Tooltip>
 
-          <div className="hidden sm:block">
-            <UserMenu />
-          </div>
+          {!DEMO_MODE && (
+            <div className="hidden sm:block">
+              <UserMenu />
+            </div>
+          )}
 
           <button
             type="button"
@@ -88,9 +91,11 @@ export function Navbar() {
               </NavLink>
             ))}
           </nav>
-          <div className="mt-3 border-t border-hairline pt-3 sm:hidden">
-            <UserMenu key={location.pathname} />
-          </div>
+          {!DEMO_MODE && (
+            <div className="mt-3 border-t border-hairline pt-3 sm:hidden">
+              <UserMenu key={location.pathname} />
+            </div>
+          )}
         </div>
       ) : null}
     </header>

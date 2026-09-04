@@ -11,7 +11,9 @@ import './index.css'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
+      {/* BASE_URL is '/' locally and '/<repo>/' on GitHub Pages, so routes
+          resolve correctly under a project-site subpath without any hardcoding. */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <AuthProvider>
           <ToastProvider>
             <BoardProvider>

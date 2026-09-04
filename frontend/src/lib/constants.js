@@ -54,3 +54,7 @@ export const STORAGE_KEYS = {
 export const GITHUB_URL =
   import.meta.env.VITE_GITHUB_URL ||
   'https://github.com/CodeScribe01/pathfinding-algorithm-visualizer'
+
+// Static hosts (GitHub Pages) serve the client without the Django API. In that
+// build the account-backed routes are hidden rather than left to fail on click.
+export const DEMO_MODE = import.meta.env.VITE_DEMO_MODE === 'true'
